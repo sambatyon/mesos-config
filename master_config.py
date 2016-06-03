@@ -14,6 +14,8 @@ class CoreConfig:
         self.work_dir = yaml['work_dir']
         self.web_ui = yaml['web_ui'] if 'web_ui' in yaml else None
         self.cluster = yaml['cluster'] if 'cluster' in yaml else None
+        self.hostname = yaml['hostname'] if 'hostname' in yaml else None
+        self.hostname = yaml['hostname_lookup'] if 'hostname_lookup' in yaml else None
 
     def __str__(self):
         string = self.prefix
@@ -23,6 +25,14 @@ class CoreConfig:
         if self.cluster:
             string += ' \\\n    --cluster=' + self.cluster
         return string
+
+
+class SecurityConfig:
+    def __init__(self, yaml):
+        pass
+
+    def __str__(self):
+        return ''
 
 
 class MasterConfig:

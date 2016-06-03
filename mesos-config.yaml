@@ -4,6 +4,8 @@ core:
   work_dir: /tmp/master
   web_ui: /webui
   cluster: my_cluster
+  hostname: my_hostname
+  hostname_lookup: true
 logging:
   quiet: false
   level: INFO
@@ -12,8 +14,6 @@ logging:
   initialize_driver: true
   public_log_file: /tmp/mesos/master/external/logfile.log
 replicated_log:
-  hostname: my_hostname
-  hostname_lookup: true
   zk_session_timeout: 10sec
   auto_initialize: true
   registry:
