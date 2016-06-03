@@ -1,10 +1,9 @@
 ---
 core:
   prefix: /path/to/mesos # Directory where the mesos executables are located
-  hostname_lookup: true
   work_dir: /tmp/master
   web_ui: /webui
-  cluster_name: my_cluster
+  cluster: my_cluster
 logging:
   quiet: false
   level: INFO
@@ -14,6 +13,7 @@ logging:
   public_log_file: /tmp/mesos/master/external/logfile.log
 replicated_log:
   hostname: my_hostname
+  hostname_lookup: true
   zk_session_timeout: 10sec
   auto_initialize: true
   registry:
