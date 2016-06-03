@@ -4,12 +4,7 @@ A launch script generator for Mesos
 Interactive UI for generating configurations for Mesos Master and Agent
 
 
-Some Thoughts HERE!
-----------------------------------------
-flag
-description
-
-
+columns description:
 label: variable name
 name: human name
 Description: hover over fuller description
@@ -21,3 +16,8 @@ validator: future use - validate valid values for free form entries
 Some good features to have:
 + make generator profile based.
 + user can save configuration templates
+
+http://mesos-config.techtamer.net
+	The website uses the opensource "Form Tools"
+	The export of the form is in csv, which will feed python which generates the bash script
+
