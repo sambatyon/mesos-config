@@ -10,4 +10,6 @@ default value: I'm thinking of making this dynamic - in future fill out mini for
 required: booleen
 validator: future use - validate valid values for free form entries
 
-
+Some good features to have:
++ make generator profile based.
++ user can save configuration templates
