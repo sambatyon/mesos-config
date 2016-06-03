@@ -1,3 +1,7 @@
+import json
+
+from io import StringIO
+
 class ParseError(Exception):
     def __init__(self, message):
         self.message = message
@@ -29,15 +33,27 @@ class CoreConfig:
 
 class SecurityConfig:
     def __init__(self, yaml):
-        pass
+        if 'credentials' in yaml:
+            self.credentials = yaml['credentials']
+
 
     def __str__(self):
-        return ''
+        string = ' '
+        if type(self.credentials) is list:
+            fp = StringIO()
+            json.dump({'credentials':self.credentials}, fp)
+            string += ' \\\n    --credentials=\'' + fp.getvalue() + '\''
+        elif self.credentials.startswith('file://'):
+            string += ' \\\n    --credentials=' + self.credentials
+        else:
+            string += ' \\\n    --credentials=file://' + self.credentials
+        return string
 
 
 class MasterConfig:
     def __init__(self, yaml):
         self.core = CoreConfig(yaml['core'])
+        self.security = SecurityConfig(yaml['security'])
 
     def __str__(self):
-        return '#!/usr/bin/env bash\n\n' + str(self.core)
+        return '#!/usr/bin/env bash\n\n' + str(self.core) + str(self.security)
