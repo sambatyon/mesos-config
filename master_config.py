@@ -12,4 +12,4 @@ class MasterConfig:
         self.core_config.prefix = yaml_object['core']['prefix']
 
     def __str__(self):
-        return str(core_config)
+        return str(self.core_config)

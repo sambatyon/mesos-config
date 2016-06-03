@@ -18,6 +18,7 @@ def main(args):
     with open(process_arguments(args).yaml_file) as yaml_file:
         raw_yaml = yaml.load(yaml_file)
         master_configuration = master_config.MasterConfig(raw_yaml)
+        print(master_configuration)
 
 if __name__ == '__main__':
     main(sys.argv)
