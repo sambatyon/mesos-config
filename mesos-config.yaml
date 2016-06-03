@@ -1,0 +1,128 @@
+---
+prefix: /path/to/mesos # Directory where the mesos executables are located
+hostname_lookup: true
+work_dir: /tmp/master
+web_ui: /webui
+cluster_name: my_cluster
+logging:
+  quiet: false
+  level: INFO
+  output_dir: /tmp/mesos/master/log_dir
+  time_buffered: 0 # seconds
+  initialize_driver: true
+  public_log_file: /tmp/mesos/master/external/logfile.log
+replicated_log:
+  hostname: my_hostname
+  zk_session_timeout: 10sec
+  auto_initialize: true
+  registry:
+    type: replicated_log # or in_memory
+    strict: true
+    store_timeout: 5sec
+    fetch_timeout: 60sec
+  master_election:
+    quorum_size: 2 # Only valid if using `replicated_log` registry type.
+slaves:
+  whitelist: /path/to/file
+  max_executors: 10 # per slave
+  slave_removal:
+    limit: 100.0%
+    rate_limit: 1/10mins
+  timeouts:
+    ping: 10mins
+    max_ping_retries: 5
+    re_registration: 10mins
+frameworks:
+  allow_root_submisions: true
+  allocator:
+    name: HierarchicalDRF
+    allocation_interval: 1sec
+    sorter: drf
+    user_sorter: drf
+    roles:
+      names:
+        - role1
+        - role2
+        - role3
+      weights:
+        role1: 10
+        role2: 5
+        role3: 20
+    timeouts:
+      offer: 5sec
+    # Alternatively, a string to a file path with a JSON object encoding the
+    # object below.
+    rate_limits:
+      limits:
+        -
+          principal: foo
+          qps: 55.5
+        -
+          principal: bar
+      aggregate_default_qps: 33.3
+security:
+  # Alternatively a string encoding a path to a file with either a json file
+  # or a text file. See flags for format.
+  credentials:
+    -
+      principal: foo
+      secret: foopassword
+    -
+      principal: bar
+      secret: barpassword
+  firewall:
+    disabled_endpoints:
+      paths:
+        - /files/browse.json
+        - /slave(0)/state.json
+  authentication:
+    frameworks: true
+    slaves: true
+    authenticators: crammd5
+    http_authenticator: basic
+  authorization:
+    acls:
+      register_frameworks:
+        -
+          principals:
+            type: ANY
+          roles:
+            values:
+              - a
+      run_tasks:
+        -
+          principals:
+            values: [ 'a', 'b' ]
+          users:
+            values: [ 'c' ]
+      shutdown_frameworks:
+        -
+          principals:
+            values: [ 'a', 'b' ]
+          framework_principals:
+            values: [ 'c' ]
+  authorizers:
+    - local
+modules:
+  modules:
+      libraries:
+        -
+          file: /path/to/libfoo.so
+          modules:
+            -
+              name: org_apache_mesos_bar
+              parameters:
+                -
+                  key: X
+                  value: Y
+            -
+              name: org_apache_mesos_baz
+        -
+          name: qux
+          modules:
+            -
+              name: org_apache_mesos_norf
+  hooks:
+    - foo
+    - bar
+...
