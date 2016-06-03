@@ -2,6 +2,9 @@
 import argparse
 import sys
 import yaml
+import master_config
+
+
 
 def process_arguments(args):
     parser = argparse.ArgumentParser(description='''
@@ -13,7 +16,8 @@ def process_arguments(args):
 
 def main(args):
     with open(process_arguments(args).yaml_file) as yaml_file:
-        print(yaml.load(yaml_file))
+        raw_yaml = yaml.load(yaml_file)
+        master_configuration = master_config.MasterConfig(raw_yaml)
 
 if __name__ == '__main__':
     main(sys.argv)

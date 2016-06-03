@@ -1,9 +1,10 @@
 ---
-prefix: /path/to/mesos # Directory where the mesos executables are located
-hostname_lookup: true
-work_dir: /tmp/master
-web_ui: /webui
-cluster_name: my_cluster
+core:
+  prefix: /path/to/mesos # Directory where the mesos executables are located
+  hostname_lookup: true
+  work_dir: /tmp/master
+  web_ui: /webui
+  cluster_name: my_cluster
 logging:
   quiet: false
   level: INFO
